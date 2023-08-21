@@ -42,7 +42,7 @@ export const ContactsPage = ({contacts, addContact}) => {
     try {
       const isDuplicate = await duplicateCheck(name);
       if(!isDuplicate) {
-        const newContact = await addContact(name, phone, email);
+        await addContact(name, phone, email);
         clearForm();
       } else { 
         console.log("Duplicate contact, form not submitted");

@@ -6,7 +6,7 @@ import { ContactsPage } from "./containers/contactsPage/ContactsPage";
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  const [appointment, setAppointment] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
   const addContact =  (name, phone, email) => {
     return new Promise((resolve) => {
@@ -18,26 +18,28 @@ function App() {
       setContacts([...contacts, newContact]);
       console.log("new contact created: " + newContact);
       resolve(newContact);
-      console.log("resolved");
+      console.log("contact resolved");
     })
     
   };
 
-  const createAppointment = (name, contact, date, time) => {
-    const appointment = {
-      name: name,
+  const addAppointment = (title, contact, date, time) => {
+    const newAppointment = {
+      title: title,
       contact: contact,
       date: date,
       time: time
     }
-    setAppointment((prev) => [...prev, appointment]);
+    setAppointments([...appointments, newAppointment]);
+    console.log("new appointment created: " + newAppointment);
   }
+
 
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={ <Root/> }>
       <Route index element={ <Navigate to={ROUTES.CONTACTS} replace/> }/>
       <Route path={ROUTES.CONTACTS} element={ <ContactsPage contacts={contacts} addContact={addContact} /> /* Add props to ContactsPage */ }/>
-      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage /> /* Add props to AppointmentsPage */ }/>
+      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage contacts={contacts} appointments={appointments} addAppointment={addAppointment} /> /* Add props to AppointmentsPage */ }/>
     </Route>
   ));
   
